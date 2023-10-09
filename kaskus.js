@@ -15,8 +15,10 @@ function deretKaskus(n) {
 
 }
 
+
 console.log(deretKaskus(10));
 
+/*
 for(let j = 2; j <=5 ; j++){
     console.log(j)
-}
+}*/
