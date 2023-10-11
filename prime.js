@@ -15,7 +15,7 @@ function indexPrime(param1){ //
          {
             result.push(prima); // perintah untuk mendorong bilangan prima
          }
-         prima ++; // penambahan bilangan prima
+         prima ++; // penambahan bilangan prima 
       }
       return result[result.length - 1]; // proses mengulang dari panjangnya result - 1
 
