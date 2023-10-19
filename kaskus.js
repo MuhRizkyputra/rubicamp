@@ -13,8 +13,8 @@ function deretKaskus(n) {
         }
     } return array;
 
-}
+} 
 
 
 console.log(deretKaskus(10));
-
+s
