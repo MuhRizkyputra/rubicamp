@@ -1,3 +1,4 @@
+// string manipulation
 function stringManipulation(word) {
 
    if (word[0].match(/^[aiueo]/i)) {
