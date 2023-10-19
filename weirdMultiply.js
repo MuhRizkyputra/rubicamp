@@ -1,3 +1,5 @@
+//weirdMultiply
+
 function weirdMultiply(sentence) {
     var numb = sentence.toString()  // merubah angka menjadi string 
     if (numb.length > 1) {
