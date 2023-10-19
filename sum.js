@@ -1,6 +1,6 @@
 function sum() {
     let tabSum = 0 // kenapa pakai 0 supaya ke timpa , apabila pakai const tidak ke timpa ( let penampung)
-    for (let i = 0; i < arguments.length; i++) { // array selalu di mulai angka 0
+    for (let i = 0; i < arguments.length; i++){ // array selalu di mulai angka 0
         tabSum = tabSum + arguments[i]
     }
     console.log(tabSum)
