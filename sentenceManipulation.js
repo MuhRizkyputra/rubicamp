@@ -1,3 +1,4 @@
+//sentenceManipulation
 function sentenceManipulation(sentence) {
     let arrSent = sentence.split(" ");
     let arrNew = [];
