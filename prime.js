@@ -1,4 +1,5 @@
-function indexPrime(param1) { // 
+//indexPrime
+function indexPrime(param1) { 
 
    let result = [];              // penampung
    let prima = 2;                // penampung bilangan prima dimulai dari angka 2
