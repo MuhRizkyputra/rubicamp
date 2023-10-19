@@ -1,4 +1,4 @@
-function pola(str){
+function pola(str) {
     let newArr = str.split(' ');
     let result = [];
 
@@ -6,10 +6,10 @@ function pola(str){
         for (let j = 0; j < 10; j++) {
 
 
-            if (newArr[0].replace('#',i) * newArr[2] == newArr[4].replace('#',j)) {
-                result.push(i,j);
+            if (newArr[0].replace('#', i) * newArr[2] == newArr[4].replace('#', j)) {
+                result.push(i, j);
             }
-            
+
         }
     }
     return result;
