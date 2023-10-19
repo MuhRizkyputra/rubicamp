@@ -1,3 +1,4 @@
+//pola
 function pola(str) {
     let newArr = str.split(' ');
     let result = [];
