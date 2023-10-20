@@ -1,8 +1,13 @@
-const fs = require("node:fs");  // ES5
+if (!process.argv[2]) {
+    console.log('tolong sertakan nama file sebagai inputan soalnya\n')
+    console.log('misalkan: node tebakan.js data.json')
+    process.exit(1);
+}
+const fs = require("node:fs");
 
-let data = fs.readFileSync("data.json", "utf-8")    // memanggil data jason dan mengubah dari hex ke alfabet
-const reference = JSON.parse(data);     // merubah string menjadi objek
-console.log(data);
+let data = fs.readFileSync(process.argv[2], "utf-8")
+const reference = JSON.parse(data);
+//console.log(data);
 
 const readline = require("node:readline")
 const rl = readline.createInterface({
@@ -13,21 +18,20 @@ const rl = readline.createInterface({
 
 reference.push({ 'definition': 'sebutkan kota yang memiliki julukan Kota Intan?', 'term': 'garut' });
 
-console.log('Selamat datang di permainan Tebak Kata, kamu akan di berikan pertanyaan dari file ini "data.JSON"')
-console.log('Untuk bermain, jawablah dengan jawaban yang sesuai')
-console.log('Gunakan "skip" untuk menangguhkan pertanyaannya, dan di akhir pertanyaaan akan ditanyakan lagi.')
+console.log('\nSelamat datang di permainan Tebak Kata, kamu akan di berikan pertanyaan dari file ini "data.JSON"\n')
+console.log('Untuk bermain, jawablah dengan jawaban yang sesuai\n')
+console.log('Gunakan "skip" untuk menangguhkan pertanyaannya, dan di akhir pertanyaaan akan ditanyakan lagi.\n')
 
 let wadahJason = 0
 let kesalahan = 1
-console.log(`pertanyaan: ${reference[wadahJason].definition}`);
+console.log(`\npertanyaan: ${reference[wadahJason].definition}`);
 
 rl.prompt();
 
 rl.on('line', (line) => {
     if (line.toString().toLowerCase() == 'skip') {
         reference.push(reference[wadahJason])
-        wadahJason++
-    
+        reference.splice(wadahJason, 1)
     }
 
     else if (line.toString().toLowerCase() == reference[wadahJason].term.toLowerCase()) {
@@ -36,15 +40,15 @@ rl.on('line', (line) => {
         kesalahan = 1
     }
     else {
-        console.log(`Anda Kurang Beruntung! anda telah salah ${kesalahan} kali, silahkan coba lagi.`);
+        console.log(`Anda Kurang Beruntung! anda telah salah ${kesalahan} kali, silahkan coba lagi.\n`);
         kesalahan++
     };
     if (wadahJason == reference.length) {
         rl.close();
     }
-    console.log(`pertanyaan: ${reference[wadahJason].definition}`);
+    console.log(`\npertanyaan: ${reference[wadahJason].definition}`);
     rl.prompt();
 }).on('close', () => {
-    console.log('Anda Menang!')
+    console.log('Anda Menang!\n')
     process.exit(0);
 });
