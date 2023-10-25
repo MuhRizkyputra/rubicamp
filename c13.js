@@ -5,11 +5,11 @@ const inputId = process.argv[3]
 const inputTugas = process.argv.slice(3).join(' ')
 const tagging = process.argv.slice(4)
 
-if (!command || command == 'help'){
+if (!command || command == 'help') {
     tolong()
 } else if (command == "list") {
     daftarKerjaan()
-} else if(command == "task") {
+} else if (command == "task") {
     daftarTugas(inputId)
 } else if (command == "add") {
     tambahTugas(inputTugas)
@@ -21,14 +21,14 @@ if (!command || command == 'help'){
     hapus(inputId)
 } else if (command == 'list:outstanding') {
     belumBeres(inputId)
-} else if ( command == 'list:complete') {
+} else if (command == 'list:completed') {
     daftarBeres(inputId)
-} else if ( command == 'tags') {
+} else if (command == 'tag') {
     tambahTag(tagging)
 } else if (`filter:${(command.slice(7))}`) {
     tambahFilter(inputId)
 }
-    
+
 
 function daftarKerjaan() {
 
@@ -42,8 +42,8 @@ function daftarKerjaan() {
     }
 }
 
-function daftarTugas(){
-    for (let i in datanya[inputId - 1]) console.log(`${i}: ${datanya[inputId -1][i]}`)
+function daftarTugas() {
+    for (let i in datanya[inputId - 1]) console.log(`${i}: ${datanya[inputId - 1][i]}`)
 }
 
 function tambahTugas(tugas) {
@@ -65,9 +65,9 @@ function hapus(id) {
         console.log('data hanya sampai ke- ', datanya.length)
         return;
     }
-    const tugasDihapus =  datanya.splice(id - 1, 1)[0]
+    const tugasDihapus = datanya.splice(id - 1, 1)[0]
     console.log(` ${tugasDihapus.namaTugas}" telah dihapus dari daftar`)
-   
+
     datanya.forEach((item, index) => {
         item.id = index + 1;
     })
@@ -98,10 +98,10 @@ function belumBeres(id) {
     console.log("daftar kerjaan");
     let wadah = []
     for (let i of datanya) {
-        if (!i.complete){
+        if (!i.complete) {
             i.complete = "[ ]";
             wadah.push(`${i.id}: ${i.complete} ${i.namaTugas}`)
-            
+
         }
     }
     if (id == "asc") console.log(wadah.join("\n"));
@@ -109,10 +109,13 @@ function belumBeres(id) {
 }
 
 function daftarBeres(id) {
+    console.log("daftar kerjaan");
+    let wadah = []
     for (let i of datanya) {
-        if (i.complete){
+        if (i.complete) {
+            i.complete = "[X]";
             wadah.push(`${i.id}: ${i.complete} ${i.namaTugas}`)
-            
+
         }
     }
     if (id == "asc") console.log(wadah.join("\n"));
@@ -121,22 +124,21 @@ function daftarBeres(id) {
 
 function tambahTag(tagar) {
     console.log(
-        `Tag ${tagar} telah ditambahkan ke dalam daftar '${
-          datanya[datanya.findIndex((i) => i.id == inputId)].namaTugas
+        `Tag ${tagar} telah ditambahkan ke dalam daftar '${datanya[datanya.findIndex((i) => i.id == inputId)].namaTugas
         }'`
-      );
-      datanya[inputId - 1].tags = process.argv.slice(4);
-      fs.writeFileSync("toDo.json", JSON.stringify(datanya), "utf-8");
+    );
+    datanya[inputId - 1].tags = process.argv.slice(4);
+    fs.writeFileSync("toDo.json", JSON.stringify(datanya), "utf-8");
 }
 
 function tambahFilter() {
     console.log("Daftar Pekerjaan");
     for (let i of datanya) {
-        if(i.tags.includes(command.slice(7))){
-            if(i.complete) {
+        if (i.tags.includes(command.slice(7))) {
+            if (i.complete) {
                 i.complete = "[x]";
                 console.log(`${i.id}: ${i.complete} ${i.namaTugas}`);
-            } else if(!i.complete) {
+            } else if (!i.complete) {
                 i.complete = "[ ]";
                 console.log(`${i.id}: ${i.complete} ${i.namaTugas}`);
             }
@@ -144,7 +146,7 @@ function tambahFilter() {
     }
 }
 
-function tolong () {
+function tolong() {
     console.log(`>>> JS TODO <<<
     node c13.js <command>
     node c13.js list
