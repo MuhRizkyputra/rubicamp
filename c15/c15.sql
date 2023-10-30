@@ -151,6 +151,3 @@ select distinct nilai.id_matkul, nilai.hasil_nilai, mahasiswa.nim, mahasiswa.nam
 jurusan.id_jurusan, jurusan.nama_jurusan, dosen.nama_dosen, nilai.nip from nilai join mahasiswa on nilai.nim = mahasiswa.nim
 join jurusan on mahasiswa.id_jurusan =  jurusan.id_jurusan
 join dosen on nilai.nip = dosen.nip where nilai.hasil_nilai >='D';
-
-
-
