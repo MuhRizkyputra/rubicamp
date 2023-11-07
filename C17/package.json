@@ -1,0 +1,17 @@
+{
+  "name": "c17",
+  "version": "1.0.0",
+  "description": "latihan import export",
+  "main": "calculator.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "import",
+    "export",
+    "ES6"
+  ],
+  "author": "Muhammad Rizky",
+  "license": "ISC"
+}
