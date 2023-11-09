@@ -76,18 +76,18 @@ insert into mata_kuliah values
 ('DK202', 'ART AND PAINT', '2');
 
 
-create table nilai (
-    id_nilai integer primary key autoincrement,
+create table kontrak (
+    id_kontrak integer primary key autoincrement,
     nip character(5) Not null,
     id_matkul character(5) not null,
     nim character(5) not null,
-    hasil_nilai varchar(5) not null,
+    nilai varchar(5) ,
     FOREIGN KEY(nip) REFERENCES dosen(nip),
     FOREIGN KEY(id_matkul) REFERENCES mata_kuliah(id_matkul),
     FOREIGN KEY(nim) REFERENCES mahasiswa(nim)
 );
 
-insert into nilai (nip, id_matkul, nim, hasil_nilai) values
+insert into kontrak (nip, id_matkul, nim, nilai) values
 ('D0001', 'SI101', '00001', 'A'),
 ('D0002', 'IK023', '00002', 'B'),
 ('D0003', 'TS203', '00003', 'A'),
