@@ -7,39 +7,42 @@ export default class Mata_kuliah {
         this.sks = sks
     }
 
-    save(next) {
-        db.run('INSERT INTO mata_kuliah VALUES (?, ?, ?)', [this.id_matkul, this.nama_matkul, this.sks], (err) => {
-            if (err) {
-                return console.log(err)
-            }
-            next()
+    save() {
+        db.run('INSERT INTO mata_kuliah VALUES (?, ?, ?)', [this.id_matkul, this.nama_matkul, this.sks], (err, data) => {
+            if (err) console.log(err)
+            else (data)
         })
     }
 
-    static add(mata_kuliah, next) {
-        db.run('INSERT INTO dosen VALUES (?, ? )', [mata_kuliah.id_matkul, mata_kuliah.nama_matkul, mata_kuliah.sks], (err) => {
-            if (err) {
-                return console.log(err)
-            }
-            next()
+    static read(next) {
+        return new Promise(function (resolve, reject) {
+            db.all('SELECT * FROM mata_kuliah ', (err, data) => {
+                if (err) reject(err)
+                else resolve(data)
+            })
         })
     }
 
-    static delete(id_matkul, next){
-        db.run('DELETE FROM mata_kuliah WHERE id_matkul = ?',[id_matkul], (err) => {
-            if (err) {
-                return console.log(err)
-            }
-            next() 
+    static find(id_matkul) {
+        return new Promise(function (resolve, reject) {
+            db.get('SELECT * FROM mata_kuliah WHERE id_matkul = ?', [id_matkul], (err, data) => {
+                if (err) reject(err)
+                else resolve(data)
+            })
         })
     }
 
-    static read(next){
-        db.all('SELECT * FROM mata_kuliah ', (err, rows) => {
-            if (err) {
-                return console.log(err)
-            }
-            next(rows)
+    static add(id_matkul, nama_matkul, sks) {
+        const mata_kuliah = new Mata_kuliah({ id_matkul: id_matkul, nama_matkul: nama_matkul, sks: sks })
+        return mata_kuliah.save()
+    }
+
+    static delete(id_matkul) {
+        return new Promise(function (resolve, reject) {
+            db.run('DELETE FROM mata_kuliah WHERE id_matkul = ?', [id_matkul], (err) => {
+                if (err) reject(err)
+                else resolve()
+            })
         })
     }
 }

@@ -1,47 +1,89 @@
 import { db } from "./connect.js"
 
 export default class Kontrak {
-    constructor({ id_kontrak, nip, id_jurusan, nim, nilai }) {
-        this.id_kontrak = id_kontrak
-        this.nip = nip
-        this.id_jurusan = id_jurusan
-        this.nim = nim
-        this.nilai = nilai
+    constructor(obj) {
+        this.nip = obj.nip; this.id_matkul = obj.id_matkul;
+        this.nim = obj.nim; this.nilai = obj.nilai;
     }
 
-    save(next) {
-        db.run('INSERT INTO kontrak VALUES (?, ?, ?, ?, ?)', [this.id_kontrak, this.nip, this.id_jurusan, this.nim, this.nilai], (err) => {
-            if (err) {
-                return console.log(err)
-            }
-            next()
+
+    save() {
+        db.run("INSERT INTO kontrak(nim, id_matkul, nip)VALUES (?, ?, ?)", [this.nim, this.id_jurusan, this.nip], (err, data) => {
+            if (err) console.log(err)
+            else data
+        })
+
+    };
+
+    static read() {
+        return new Promise(function (resolve, reject) {
+            db.all("SELECT * FROM kontrak  LEFT JOIN mahasiswa USING(nim) LEFT JOIN mata_kuliah USING(id_matkul) LEFT JOIN dosen USING(nip)", (err, data) => {          
+                if (err) reject(err)
+                else resolve(data)
+
+            })
         })
     }
 
-    static add(kontrak, next) {
-        db.run('INSERT INTO kontrak VALUES (?, ?, ?, ?, ? )', [kontrak.id_kontrak, kontrak.nip, kontrak.id_jurusan, kontrak.nim, kontrak.nilai], (err) => {
-            if (err) {
-                return console.log(err)
-            }
-            next()
+    static find(nim) {
+        return new Promise(function (resolve, reject) {
+            db.all("SELECT id_kontrak,mahasiswa.nama AS nama , mata_kuliah.nama_matkul AS mata_kuliah,dosen.nama_dosen AS dosen,nilai FROM kontrak LEFT JOIN mahasiswa USING(nim) LEFT JOIN mata_kuliah ON mata_kuliah.id_matkul = kontrak.id_matkul LEFT JOIN dosen ON dosen.nip = kontrak.nip WHERE kontrak.nim = ?", [nim], (err, data) => {
+                if (err) reject(err)
+                else resolve(data)
+            })
         })
     }
 
-    static delete(id, next){
-        db.run('DELETE FROM kontrak WHERE id_kontrak = ?',[id_kontrak], (err) => {
-            if (err) {
-                return console.log(err)
-            }
-            next() 
+    static add(nim, id_matkul, nip) {
+        db.run("INSERT INTO kontrak(nim, id_matkul, nip)VALUES (?, ?, ?)", [this.nim, this.id_jurusan, this.nip], (err, data) => {
+            if (err) console.log(err)
+            else data
         })
     }
 
-    static read(next){
-        db.all('SELECT * FROM kontrak LEFT JOIN mahasiswa USING(nim) LEFT JOIN mata_kuliah USING(id_matkul) LEFT JOIN dosen USING(nip)', (err, rows) => {
-            if (err) {
-                return console.log(err)
-            }
-            next(rows)
+    static delete(id_kontrak) {
+        return new Promise(function (resolve, reject) {
+            db.get("DELETE FROM kontrak WHERE id_kontrak = ? ", [id_kontrak], (err, data) => {
+                if (err) reject(err)
+                else resolve(data)
+            })
         })
     }
+
+    static update(nilai, id_kontrak, nim) {
+        return new Promise(function (resolve, reject) {
+            db.run("UPDATE kontrak SET nilai = ? WHERE id_kontrak = ? AND nim = ? ", [nilai, id_kontrak, nim], (err, data) => {
+                if (err) reject(err)
+                else resolve(data)
+            })
+        })
+    }
+
+    static findAdd(nim, id_matkul) {
+        return new Promise(function (resolve, reject) {
+            db.get("SELECT * FROM kontrak WHERE nim = ? AND id_matkul = ? ", [nim, id_matkul], (err, data) => {
+                if (err) reject(err)
+                else resolve(data)
+            })
+        })
+    }
+
+    static findDelete(id_kontrak) {
+        return new Promise(function (resolve, reject) {
+            db.get("SELECT * FROM kontrak WHERE id-kontrak = ?", [id_kontrak], (err, data) => {
+                if (err) reject(err)
+                else resolve(data)
+            })
+        })
+    }
+
+    static findUpdate(id_kontrak, nim) {
+        return new Promise(function (resolve, reject) {
+            db.get("SELECT * FROM kontrak WHERE id_kontrak = ? AND nim = ?", [id_kontrak, nim], (err, data) => {
+                if (err) reject(err)
+                else resolve(data)
+            })
+        })
+    }
+
 }
