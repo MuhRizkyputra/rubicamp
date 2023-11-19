@@ -35,7 +35,7 @@ export default class Kontrak {
     }
 
     static add(nim, id_matkul, nip) {
-        db.run("INSERT INTO kontrak(nim, id_matkul, nip)VALUES (?, ?, ?)", [this.nim, this.id_jurusan, this.nip], (err, data) => {
+        db.run("INSERT INTO kontrak(nim, id_matkul, nip)VALUES (?, ?, ?)", [nim, id_matkul, nip], (err, data) => {
             if (err) console.log(err)
             else data
         })
@@ -70,7 +70,7 @@ export default class Kontrak {
 
     static findDelete(id_kontrak) {
         return new Promise(function (resolve, reject) {
-            db.get("SELECT * FROM kontrak WHERE id-kontrak = ?", [id_kontrak], (err, data) => {
+            db.get("SELECT * FROM kontrak WHERE id_kontrak = ?", [id_kontrak], (err, data) => {
                 if (err) reject(err)
                 else resolve(data)
             })

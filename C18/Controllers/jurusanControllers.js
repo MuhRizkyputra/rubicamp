@@ -58,7 +58,7 @@ export default class JurusanControllers {
                 JurusanControllers.option()
             } else {
                 console.log(`Dosen dengan Kode Jurusan ${kode}, tidak terdaftar `);
-                DosenControllers.option()
+                JurusanControllers.option()
             }
         })
     }
