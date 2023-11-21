@@ -52,7 +52,7 @@ export default class KontrakControllers {
     static async read() {
         const kontrak = await Kontrak.read();
         if (kontrak) {
-            console.log(kontrak)
+            // console.log(kontrak)
             showKontrak(kontrak)
             KontrakControllers.option()
         } else {
